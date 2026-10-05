@@ -1,0 +1,58 @@
+- Player class:
+    - Name
+    - Choice
+    Methods
+    - Guess code
+
+- Computer Class:
+    - Code
+    Methods
+    - Create code
+
+- Board Class:
+    - 12 guesses with 4 fields
+    - Secret code
+    - 6 different colors:
+        - 1 = red
+        - 2 = green
+        - 3 = blue
+        - 4 = yellow
+        - 5 = purple
+        - 6 = orange
+
+    - 3 states for each of the 4 fields;
+        - right color wrong position
+        - right color right position
+        - wrong color wrong position
+
+- Game class:
+    - Player
+    - Computer
+    - Board
+    - Code
+    Methods
+    - play
+    - win
+    - lose
+    - key_peg
+
+Board:
+Code goes 1 through 6 each field
+
+Round one
+
+Enter your guess (4 numbers, 1 through 6):
+
+_ _ _ _
+
+show_guess:
+
+You've guessed:
+
+X X X X
+
+show_key_peg:
+
+
+
+
