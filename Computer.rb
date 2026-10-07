@@ -9,6 +9,6 @@ class Computer
     4.times do
       @code << rand(1..6)
     end
-    puts "Computer select it's code: [*, *, *, *]"
+    puts "Computer has generated a secret code."
   end
 end

@@ -1,53 +1,72 @@
 require './Player'
 require './Computer'
+require 'colorize'
 
 class Game
-  
 
   def initialize
     @player = Player.new("Player 1")
     @computer = Computer.new
-    @board = ["X", "X", "X", "X"]
     @round = 1
   end
   
   def play
-    @computer.generate_secret_code
     puts "Welcome to Mastermind!"
+    puts "\n"
+    @computer.generate_secret_code
+    puts @computer.code
+    puts "\n"
     while @player.choice != @computer.code && @round < 13
       puts "Round #{@round}:"
 
       @player.set_choice
 
-      display_board
-
       puts "Player's choice: #{@player.choice}"
+
+      if @player.choice == @computer.code
+        puts "Congratulations! You've guessed the secret code!"
+        break
+      end
+      key_peg
       @round += 1
       if @round > 12
-      puts "Game Over! You've used all your attempts."
+        puts "Game Over! You've used all your attempts."
+        puts "The secret code was: #{@computer.code}"
       end
     end    
 
   end
 
-  def result
-        
+
+  def result(choice, code)
+    exact_matches = 0
+    code_counts = Hash.new(0)
+    choice_counts = Hash.new(0)
+
+    choice.each_with_index do |num, index|
+      if num == code[index]
+        exact_matches += 1
+      else
+        code_counts[code[index]] += 1
+        choice_counts[num] += 1
+      end
+    end
+
+    number_matches = 0
+    choice_counts.each do |num, count|
+      if code_counts.key?(num)
+        number_matches += [count, code_counts[num]].min
+      end
+    end
+    {exact: exact_matches, number: number_matches}
   end  
 
-  def display_board
-    puts "Board"
-  end
-
   def key_peg
-    if @player.choice.each_with_index { |num, index| num == @computer.code[index] }
-      puts "Key Peg: 4"
-    elsif @player.choice.any? { |num| @computer.code.include?(num) }
-      puts "Key Peg: 1"
-    else
-      puts "Key Peg: 0"
-    end
+    puts "Key Peg"
+    puts "---------------------------------"
+    puts "Exact matches: #{result(@player.choice, @computer.code)[:exact]}"
+    puts "Number matches: #{result(@player.choice, @computer.code)[:number]}"    
   end
-
 end
 
 Game.new.play
