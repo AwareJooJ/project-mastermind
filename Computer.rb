@@ -1,4 +1,4 @@
-class Player
+class Computer
   attr_accessor :code
 
   def initialize
@@ -9,5 +9,6 @@ class Player
     4.times do
       @code << rand(1..6)
     end
+    puts "Computer select it's code: [*, *, *, *]"
   end
 end

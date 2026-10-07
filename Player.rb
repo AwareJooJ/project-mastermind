@@ -8,6 +8,6 @@ class Player
 
   def set_choice
     puts "Enter your guess (4 numbers, 1 through 6):"
-    @choice = gets.chomp.to_i
+    @choice = gets.chomp.split("").map(&:to_i)
   end
 end
