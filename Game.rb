@@ -14,14 +14,13 @@ class Game
     puts "Welcome to Mastermind!"
     puts "\n"
     @computer.generate_secret_code
-    puts @computer.code
-    puts "\n"
     while @player.choice != @computer.code && @round < 13
+      puts "---------------------------------"
       puts "Round #{@round}:"
 
       @player.set_choice
-
-      puts "Player's choice: #{@player.choice}"
+      puts "\n"
+      puts "Player's choice: #{colorize_numbers(@player.choice)}"
 
       if @player.choice == @computer.code
         puts "Congratulations! You've guessed the secret code!"
@@ -31,7 +30,7 @@ class Game
       @round += 1
       if @round > 12
         puts "Game Over! You've used all your attempts."
-        puts "The secret code was: #{@computer.code}"
+        puts "The secret code was: #{colorize_numbers(@computer.code)}"
       end
     end    
 
@@ -64,9 +63,31 @@ class Game
   def key_peg
     puts "Key Peg"
     puts "---------------------------------"
-    puts "Exact matches: #{result(@player.choice, @computer.code)[:exact]}"
-    puts "Number matches: #{result(@player.choice, @computer.code)[:number]}"    
+    puts "Exact matches: #{result(@player.choice, @computer.code)[:exact].to_s.colorize(:red)}"
+    puts "Number matches: #{result(@player.choice, @computer.code)[:number].to_s.colorize(:gray)}"    
   end
+
+  def colorize_numbers(numbers)
+    numbers.map do |num|
+      case num
+      when 1
+        num.to_s.colorize(:color => :red, :mode => :bold)
+      when 2
+        num.to_s.colorize(:color => :green, :mode => :bold)
+      when 3
+        num.to_s.colorize(:color => :blue, :mode => :bold)
+      when 4
+        num.to_s.colorize(:color => :yellow, :mode => :bold)
+      when 5
+        num.to_s.colorize(:color => :magenta, :mode => :bold)
+      when 6
+        num.to_s.colorize(:color => :cyan, :mode => :bold)
+      else
+        num.to_s
+      end
+    end.join(" ")
+  end
+
 end
 
 Game.new.play
